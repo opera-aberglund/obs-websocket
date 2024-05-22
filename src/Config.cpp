@@ -55,10 +55,6 @@ void Config::Load(json config)
 		Utils::Json::GetJsonFileContent(configFilePath, config); // Fetch the existing config, which may not exist
 	}
 
-	// Should never happen, but just in case
-	if (!config.is_object())
-		return;
-
 	if (config.contains(PARAM_FIRSTLOAD) && config[PARAM_FIRSTLOAD].is_boolean())
 		FirstLoad = config[PARAM_FIRSTLOAD];
 	if (config.contains(PARAM_ENABLED) && config[PARAM_ENABLED].is_boolean())

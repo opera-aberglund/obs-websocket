@@ -47,6 +47,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #define CMDLINE_WEBSOCKET_PASSWORD "websocket_password"
 #define CMDLINE_WEBSOCKET_DEBUG "websocket_debug"
 #define CMDLINE_WEBSOCKET_ENABLED "websocket_enabled"
+#define CMDLINE_WEBSOCKET_NO_AUTH "websocket_no_auth"
 
 void Config::Load(json config)
 {
@@ -122,6 +123,12 @@ void Config::Load(json config)
 	if (Utils::Platform::GetCommandLineFlagSet(CMDLINE_WEBSOCKET_ENABLED)) {
 		blog(LOG_INFO, "[Config::Load] --websocket_enabled passed. Enabling websocket server.");
 		ServerEnabled = true;
+	}
+
+	// Process `--websocket_no_auth` override
+	if (Utils::Platform::GetCommandLineFlagSet(CMDLINE_WEBSOCKET_NO_AUTH)) {
+		blog(LOG_INFO, "[Config::Load] --websocket_no_auth passed. Disabling AuthRequired.");
+		AuthRequired = false;
 	}
 }
 

@@ -46,6 +46,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #define CMDLINE_WEBSOCKET_IPV4_ONLY "websocket_ipv4_only"
 #define CMDLINE_WEBSOCKET_PASSWORD "websocket_password"
 #define CMDLINE_WEBSOCKET_DEBUG "websocket_debug"
+#define CMDLINE_WEBSOCKET_ENABLED "websocket_enabled"
 
 void Config::Load(json config)
 {
@@ -119,6 +120,12 @@ void Config::Load(json config)
 		// Debug does not persist on reload, so we let people override it with a flag.
 		blog(LOG_INFO, "[Config::Load] --websocket_debug passed. Enabling debug logging.");
 		DebugEnabled = true;
+	}
+
+	// Process `--websocket_enabled` override
+	if (Utils::Platform::GetCommandLineFlagSet(CMDLINE_WEBSOCKET_ENABLED)) {
+		blog(LOG_INFO, "[Config::Load] --websocket_enabled passed. Enabling websocket server.");
+		ServerEnabled = true;
 	}
 }
 
